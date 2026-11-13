@@ -8,7 +8,6 @@ if ('IntersectionObserver' in window) {
       sectionLinks.forEach((link) => {
         const isCurrent = link.hash === `#${entry.target.id}`;
         link.classList.toggle('is-current', isCurrent);
-        if (isCurrent && window.innerWidth <= 720) link.scrollIntoView({ block: 'nearest', inline: 'nearest' });
       });
     });
   }, { rootMargin: '-20% 0px -65% 0px' });
