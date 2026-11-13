@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f4f6f7">
+  <meta name="description" content="Demo aplikasi kasir sederhana, berjalan langsung di browser tanpa database.">
+  <title>Kasir Studio — Demo POS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <a class="store-brand" href="../index.html" aria-label="Kembali ke portofolio Yuda">
+        <span class="brand-symbol" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 4h16v16H4z"/><path class="symbol-cut" d="M8 8h8v2H8zm0 4h5v2H8z"/></svg></span>
+        <span>kasir<span class="brand-light">studio</span><small>DEMO POINT OF SALE</small></span>
+      </a>
+
+      <div class="side-label">MENU UTAMA</div>
+      <nav class="side-nav" aria-label="Menu kasir">
+        <button class="side-link is-active" type="button" data-page="products"><span class="nav-icon" aria-hidden="true">▦</span><span>Produk</span><span class="nav-count" data-cart-count>0</span></button>
+        <button class="side-link" type="button" data-page="customers"><span class="nav-icon" aria-hidden="true">♙</span><span>Pelanggan</span></button>
+        <button class="side-link" type="button" data-page="payment"><span class="nav-icon" aria-hidden="true">↗</span><span>Pembayaran</span><span class="nav-dot" data-payment-dot hidden></span></button>
+      </nav>
+
+      <div class="sidebar-bottom">
+        <div class="demo-note"><span class="demo-indicator"></span><span><strong>Mode demo</strong><small>Data hanya sementara</small></span></div>
+        <a class="portfolio-link" href="../index.html"><span aria-hidden="true">←</span> Kembali ke portofolio</a>
+      </div>
+    </aside>
+
+    <div class="app-main">
+      <header class="topbar">
+        <button class="mobile-menu" type="button" aria-label="Buka menu" aria-expanded="false"><span></span><span></span></button>
+        <div class="breadcrumb"><span>Kasir Studio</span><span class="breadcrumb-separator">/</span><strong data-breadcrumb>Produk</strong></div>
+        <div class="topbar-right"><span class="store-status"><span></span> Toko buka</span><span class="avatar" aria-label="Kasir Yuda">Y</span></div>
+      </header>
+
+      <main class="workspace">
+        <section class="page is-visible" id="products-page" data-view="products" aria-labelledby="products-title">
+          <div class="page-heading">
+            <div><p class="overline">KATALOG TOKO</p><h1 id="products-title">Produk</h1><p class="page-subtitle">Pilih barang untuk menambahkannya ke transaksi.</p></div>
+            <div class="heading-date"><span class="date-icon" aria-hidden="true">◷</span><span data-current-date></span></div>
+          </div>
+
+          <div class="product-toolbar">
+            <label class="search-box"><span aria-hidden="true">⌕</span><input type="search" id="product-search" placeholder="Cari nama produk..." autocomplete="off"><kbd>Ctrl K</kbd></label>
+            <div class="category-filter" role="group" aria-label="Filter kategori">
+              <button type="button" class="filter-chip is-selected" data-category="Semua">Semua</button>
+              <button type="button" class="filter-chip" data-category="Minuman">Minuman</button>
+              <button type="button" class="filter-chip" data-category="Makanan">Makanan</button>
+              <button type="button" class="filter-chip" data-category="Lainnya">Lainnya</button>
+            </div>
+          </div>
+
+          <div class="products-layout">
+            <div class="product-grid" id="product-grid" aria-live="polite"></div>
+            <aside class="cart-panel" aria-labelledby="cart-title">
+              <div class="cart-heading"><div><p class="overline">TRANSAKSI BARU</p><h2 id="cart-title">Keranjang</h2></div><button class="clear-cart" type="button" data-clear-cart disabled>Hapus</button></div>
+              <div class="cart-items" data-cart-items><div class="cart-empty"><span aria-hidden="true">＋</span><strong>Belum ada produk</strong><small>Pilih produk untuk memulai transaksi.</small></div></div>
+              <div class="cart-summary">
+                <div><span>Subtotal</span><strong data-subtotal>Rp0</strong></div>
+                <div class="summary-total"><span>Total pembayaran</span><strong data-total>Rp0</strong></div>
+                <button class="checkout-button" type="button" data-go-payment disabled>Lanjut ke pembayaran <span aria-hidden="true">→</span></button>
+                <p class="secure-note"><span aria-hidden="true">◈</span> Transaksi demo, tanpa database</p>
+              </div>
+            </aside>
+          </div>
+        </section>
+
+        <section class="page" id="customers-page" data-view="customers" aria-labelledby="customers-title" hidden>
+          <div class="page-heading">
+            <div><p class="overline">DATA TOKO</p><h1 id="customers-title">Pelanggan</h1><p class="page-subtitle">Kelola daftar pelanggan untuk transaksi.</p></div>
+            <button class="primary-button" type="button" data-open-customer><span aria-hidden="true">＋</span> Tambah pelanggan</button>
+          </div>
+          <div class="customer-stats"><div><span class="stat-icon blue" aria-hidden="true">♙</span><span><small>TOTAL PELANGGAN</small><strong data-customer-count>0</strong></span></div><p>Data pelanggan yang ditambahkan tersedia selama demo ini terbuka.</p></div>
+          <div class="table-card">
+            <div class="table-toolbar"><div><h2>Daftar pelanggan</h2><p>Informasi pelanggan toko</p></div><label class="table-search"><span aria-hidden="true">⌕</span><input type="search" id="customer-search" placeholder="Cari pelanggan..."></label></div>
+            <div class="table-scroll"><table><thead><tr><th>NAMA PELANGGAN</th><th>NOMOR TELEPON</th><th>EMAIL</th><th>STATUS</th></tr></thead><tbody id="customer-rows"></tbody></table></div>
+            <div class="table-empty" data-customer-empty hidden><span>Belum ada pelanggan yang cocok.</span></div>
+          </div>
+        </section>
+
+        <section class="page" id="payment-page" data-view="payment" aria-labelledby="payment-title" hidden>
+          <div class="page-heading">
+            <div><p class="overline">SELESAIKAN TRANSAKSI</p><h1 id="payment-title">Pembayaran</h1><p class="page-subtitle">Periksa pesanan dan pilih metode pembayaran.</p></div>
+            <span class="transaction-badge"><span></span> Transaksi aktif</span>
+          </div>
+          <div class="payment-layout">
+            <div class="payment-main">
+              <section class="payment-card customer-select-card">
+                <div class="card-title"><span class="step-number">01</span><div><h2>Pelanggan</h2><p>Pilih pelanggan atau gunakan pelanggan umum.</p></div></div>
+                <label class="field-label" for="payment-customer">Pilih pelanggan</label>
+                <select id="payment-customer"><option value="">Pelanggan umum</option></select>
+              </section>
+
+              <section class="payment-card order-card">
+                <div class="card-title"><span class="step-number">02</span><div><h2>Pesanan</h2><p><span data-order-count>0</span> item dalam transaksi</p></div><button class="small-text-button" type="button" data-back-products>＋ Tambah produk</button></div>
+                <div class="payment-items" data-payment-items></div>
+                <div class="payment-empty" data-payment-empty><span aria-hidden="true">▦</span><strong>Keranjang masih kosong</strong><button type="button" data-back-products>Jelajahi produk</button></div>
+              </section>
+
+              <section class="payment-card method-card">
+                <div class="card-title"><span class="step-number">03</span><div><h2>Metode pembayaran</h2><p>Pilih cara pelanggan membayar.</p></div></div>
+                <div class="payment-methods" role="group" aria-label="Metode pembayaran">
+                  <button type="button" class="method-option is-selected" data-method="Tunai"><span class="method-symbol" aria-hidden="true">Rp</span><span>Tunai</span><span class="radio-dot"></span></button>
+                  <button type="button" class="method-option" data-method="QRIS"><span class="method-symbol qris" aria-hidden="true">▦</span><span>QRIS</span><span class="radio-dot"></span></button>
+                  <button type="button" class="method-option" data-method="Kartu debit"><span class="method-symbol card-symbol" aria-hidden="true">▰</span><span>Kartu debit</span><span class="radio-dot"></span></button>
+                </div>
+                <div class="cash-field" data-cash-field><label class="field-label" for="cash-received">Jumlah uang diterima</label><div class="money-input"><span>Rp</span><input type="number" id="cash-received" min="0" step="500" placeholder="0" inputmode="numeric"></div><div class="change-line"><span>Kembalian</span><strong data-change>Rp0</strong></div></div>
+              </section>
+            </div>
+
+            <aside class="payment-summary">
+              <div class="summary-head"><h2>Ringkasan</h2><span data-summary-items>0 item</span></div>
+              <div class="summary-details"><div><span>Subtotal</span><strong data-payment-subtotal>Rp0</strong></div><div><span>Pajak</span><strong>Rp0</strong></div></div>
+              <div class="pay-total"><span>Total tagihan</span><strong data-payment-total>Rp0</strong></div>
+              <button class="complete-payment" type="button" data-complete-payment disabled>Selesaikan pembayaran <span aria-hidden="true">→</span></button>
+              <p class="payment-footnote"><span aria-hidden="true">◈</span> Demo lokal · tidak ada uang sungguhan</p>
+            </aside>
+          </div>
+        </section>
+      </main>
+      <footer class="app-footer"><span>Kasir Studio <b>·</b> Demo aplikasi</span><span>Data tersimpan sementara di halaman ini</span></footer>
+    </div>
+  </div>
+
+  <dialog class="customer-dialog" aria-labelledby="customer-dialog-title">
+    <form class="dialog-form" id="customer-form">
+      <button class="dialog-close" type="button" data-close-customer aria-label="Tutup">×</button>
+      <p class="overline">DATA PELANGGAN</p><h2 id="customer-dialog-title">Tambah pelanggan</h2><p class="dialog-description">Lengkapi informasi pelanggan baru.</p>
+      <label for="customer-name">Nama lengkap <span>*</span></label><input id="customer-name" name="name" required maxlength="60" placeholder="Contoh: Rani Putri">
+      <label for="customer-phone">Nomor telepon <span>*</span></label><input id="customer-phone" name="phone" required maxlength="20" inputmode="tel" placeholder="08xx xxxx xxxx">
+      <label for="customer-email">Email <small>(opsional)</small></label><input id="customer-email" name="email" type="email" maxlength="80" placeholder="nama@email.com">
+      <div class="dialog-actions"><button class="secondary-button" type="button" data-close-customer>Batal</button><button class="primary-button" type="submit">Simpan pelanggan</button></div>
+    </form>
+  </dialog>
+
+  <dialog class="receipt-dialog" aria-labelledby="receipt-title">
+    <div class="receipt-content"><span class="success-mark" aria-hidden="true">✓</span><p class="overline">TRANSAKSI BERHASIL</p><h2 id="receipt-title">Pembayaran selesai!</h2><p>Terima kasih, transaksi demo berhasil dicatat.</p><div class="receipt-total"><span>Total dibayar</span><strong data-receipt-total>Rp0</strong></div><p class="receipt-number" data-receipt-number></p><button class="primary-button" type="button" data-close-receipt>Kembali ke produk <span aria-hidden="true">→</span></button></div>
+  </dialog>
+
+  <div class="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
